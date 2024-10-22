@@ -12,8 +12,8 @@ import {
   acceptRequest,
   profileViews,
   suggestedFriends,
-} from "../controllers/userController";
-import userAuth from "../middleware/authMiddleware";
+} from "../controllers/userController.js";
+import userAuth from "../middleware/authMiddleware.js";
 
 const router = express.Router();
 const __dirname = path.resolve(path.dirname(""));

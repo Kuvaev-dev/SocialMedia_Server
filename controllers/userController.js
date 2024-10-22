@@ -1,9 +1,10 @@
 import mongoose from "mongoose";
-import Verification from "../models/emailVerification";
-import Users from "../models/userModel";
-import { compareString, hashString, createJWT } from "../utils/index";
+import Verification from "../models/emailVerification.js";
+import Users from "../models/userModel.js";
+import { compareString, hashString, createJWT } from "../utils/index.js";
 import PasswordReset from "../models/PasswordReset.js";
 import FriendRequest from "../models/friendRequest.js";
+import { resetPasswordLink } from "../utils/sendEmail.js";
 
 export const verifyEmail = async (req, res) => {
   const { userId, token } = req.params;

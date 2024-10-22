@@ -3,16 +3,17 @@ import dotenv from "dotenv";
 import { v4 as uuidv4 } from "uuid";
 import { hashString } from "./index.js";
 import Verification from "../models/emailVerification.js";
+import PasswordReset from "../models/PasswordReset.js";
 
 dotenv.config();
 
-const { AUTH_EMAIL, AUTH_PASSWORD, APP_URL } = process.env;
+const { AUTH_EMAIL, AUTH_APP_PASSWORD, APP_URL } = process.env;
 
 let transporter = nodemailer.createTransport({
-  host: "smtp-mail.outlook.com",
+  service: "gmail",
   auth: {
     user: AUTH_EMAIL,
-    pass: AUTH_PASSWORD,
+    pass: AUTH_APP_PASSWORD,
   },
 });
 
@@ -69,12 +70,12 @@ export const sendVerificationEmail = async (user, res) => {
         })
         .catch((err) => {
           console.log(err);
-          res.status(404).json({ message: "Something went wrong" });
+          res.status(404).json({ message: `Something went wrong: ${err}` });
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: "Something went wrong" });
+    res.status(404).json({ message: `Something went wrong: ${error}` });
   }
 };
 
@@ -120,11 +121,11 @@ export const resetPasswordLink = async (user, res) => {
         })
         .catch((err) => {
           console.log(err);
-          res.status(404).json({ message: "Something went wrong" });
+          res.status(404).json({ message: `Something went wrong: : ${err}` });
         });
     }
   } catch (error) {
     console.log(error);
-    res.status(404).json({ message: "Something went wrong" });
+    res.status(404).json({ message: `Something went wrong: ${error}` });
   }
 };

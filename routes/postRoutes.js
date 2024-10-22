@@ -1,5 +1,5 @@
 import express from "express";
-import userAuth from "../middleware/authMiddleware";
+import userAuth from "../middleware/authMiddleware.js";
 import {
   createPost,
   getPosts,
@@ -11,7 +11,7 @@ import {
   commentPost,
   replyPostComment,
   deletePost,
-} from "../controllers/postController";
+} from "../controllers/postController.js";
 
 const router = express.Router();
 
