@@ -1,19 +1,21 @@
 import mongoose from "mongoose";
 import Verification from "../models/emailVerification.js";
 import Users from "../models/userModel.js";
-import { compareString, hashString, createJWT } from "../utils/index.js";
+import { compareString, createJWT, hashString } from "../utils/index.js";
 import PasswordReset from "../models/PasswordReset.js";
-import FriendRequest from "../models/friendRequest.js";
 import { resetPasswordLink } from "../utils/sendEmail.js";
+import FriendRequest from "../models/friendRequest.js";
 
 export const verifyEmail = async (req, res) => {
   const { userId, token } = req.params;
 
   try {
     const result = await Verification.findOne({ userId });
+
     if (result) {
       const { expiresAt, token: hashedToken } = result;
-      // Token has expires
+
+      // token has expires
       if (expiresAt < Date.now()) {
         Verification.findOneAndDelete({ userId })
           .then(() => {
@@ -31,7 +33,7 @@ export const verifyEmail = async (req, res) => {
             res.redirect(`/users/verified?message=`);
           });
       } else {
-        // Token is valid
+        //token valid
         compareString(token, hashedToken)
           .then((isMatch) => {
             if (isMatch) {
@@ -52,13 +54,13 @@ export const verifyEmail = async (req, res) => {
                   );
                 });
             } else {
-              // Invalid token
+              // invalid token
               const message = "Verification failed or link is invalid";
               res.redirect(`/users/verified?status=error&message=${message}`);
             }
           })
           .catch((err) => {
-            console.log(error);
+            console.log(err);
             res.redirect(`/users/verified?message=`);
           });
       }
@@ -106,7 +108,7 @@ export const resetPassword = async (req, res) => {
   const { userId, token } = req.params;
 
   try {
-    // Find record
+    // find record
     const user = await Users.findById(userId);
 
     if (!user) {
@@ -115,6 +117,7 @@ export const resetPassword = async (req, res) => {
     }
 
     const resetPassword = await PasswordReset.findOne({ userId });
+
     if (!resetPassword) {
       const message = "Invalid password reset link. Try again";
       return res.redirect(
@@ -336,11 +339,15 @@ export const acceptRequest = async (req, res, next) => {
 
     if (status === "Accepted") {
       const user = await Users.findById(id);
+
       user.friends.push(newRes?.requestFrom);
+
       await user.save();
 
       const friend = await Users.findById(newRes?.requestFrom);
+
       friend.friends.push(newRes?.requestTo);
+
       await friend.save();
     }
 

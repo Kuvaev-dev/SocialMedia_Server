@@ -1,5 +1,5 @@
-import Posts from "../models/postModel.js";
 import Comments from "../models/commentModel.js";
+import Posts from "../models/postModel.js";
 import Users from "../models/userModel.js";
 
 export const createPost = async (req, res, next) => {
@@ -19,7 +19,7 @@ export const createPost = async (req, res, next) => {
     });
 
     res.status(200).json({
-      success: true,
+      sucess: true,
       message: "Post created successfully",
       data: post,
     });
@@ -70,7 +70,7 @@ export const getPosts = async (req, res, next) => {
     }
 
     res.status(200).json({
-      success: true,
+      sucess: true,
       message: "successfully",
       data: postsRes,
     });
@@ -107,7 +107,7 @@ export const getPost = async (req, res, next) => {
     // });
 
     res.status(200).json({
-      success: true,
+      sucess: true,
       message: "successfully",
       data: post,
     });
@@ -129,7 +129,7 @@ export const getUserPost = async (req, res, next) => {
       .sort({ _id: -1 });
 
     res.status(200).json({
-      success: true,
+      sucess: true,
       message: "successfully",
       data: post,
     });
@@ -155,7 +155,7 @@ export const getComments = async (req, res, next) => {
       .sort({ _id: -1 });
 
     res.status(200).json({
-      success: true,
+      sucess: true,
       message: "successfully",
       data: postComments,
     });
@@ -272,7 +272,7 @@ export const commentPost = async (req, res, next) => {
 
     await newComment.save();
 
-    // Updating the post with the comments id
+    //updating the post with the comments id
     const post = await Posts.findById(id);
 
     post.comments.push(newComment._id);

@@ -5,7 +5,7 @@ import { sendVerificationEmail } from "../utils/sendEmail.js";
 export const register = async (req, res, next) => {
   const { firstName, lastName, email, password } = req.body;
 
-  // Validate fields
+  //validate fileds
   if (!(firstName || lastName || email || password)) {
     next("Provide Required Fields!");
     return;
@@ -13,6 +13,7 @@ export const register = async (req, res, next) => {
 
   try {
     const userExist = await Users.findOne({ email });
+
     if (userExist) {
       next("Email Address already exists");
       return;
@@ -27,7 +28,7 @@ export const register = async (req, res, next) => {
       password: hashedPassword,
     });
 
-    // Send email verification to user
+    //send email verification to user
     sendVerificationEmail(user, res);
   } catch (error) {
     console.log(error);
@@ -39,13 +40,13 @@ export const login = async (req, res, next) => {
   const { email, password } = req.body;
 
   try {
-    // Validation
+    //validation
     if (!email || !password) {
       next("Please Provide User Credentials");
       return;
     }
 
-    // Find user by email
+    // find user by email
     const user = await Users.findOne({ email }).select("+password").populate({
       path: "friends",
       select: "firstName lastName location profileUrl -password",
@@ -63,8 +64,9 @@ export const login = async (req, res, next) => {
       return;
     }
 
-    // Compare passwords
+    // compare password
     const isMatch = await compareString(password, user?.password);
+
     if (!isMatch) {
       next("Invalid email or password");
       return;
