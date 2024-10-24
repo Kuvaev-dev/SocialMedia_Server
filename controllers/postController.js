@@ -19,7 +19,7 @@ export const createPost = async (req, res, next) => {
     });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "Post created successfully",
       data: post,
     });
@@ -70,7 +70,7 @@ export const getPosts = async (req, res, next) => {
     }
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "successfully",
       data: postsRes,
     });
@@ -107,7 +107,7 @@ export const getPost = async (req, res, next) => {
     // });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "successfully",
       data: post,
     });
@@ -129,7 +129,7 @@ export const getUserPost = async (req, res, next) => {
       .sort({ _id: -1 });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "successfully",
       data: post,
     });
@@ -155,7 +155,7 @@ export const getComments = async (req, res, next) => {
       .sort({ _id: -1 });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "successfully",
       data: postComments,
     });
@@ -185,7 +185,7 @@ export const likePost = async (req, res, next) => {
     });
 
     res.status(200).json({
-      sucess: true,
+      success: true,
       message: "successfully",
       data: newPost,
     });
